@@ -2,8 +2,11 @@
 "use server"
 import { ID, Query } from "node-appwrite";
 import { users } from "../appwrite.config";
+import { parseStringify } from "../utils";
 
 /* eslint-disable no-undef */
+
+// create user
 export const createUser = async (user: CreateUserParams) => {
   try {
     const newUser = await users.create(
@@ -20,3 +23,13 @@ export const createUser = async (user: CreateUserParams) => {
     }
   }
 };
+
+// get user
+export const getUser = async(userId: string) => {
+  try {
+    const user = await users.get(userId);
+    return parseStringify(user)
+  } catch (error: any) {
+    console.log(error);
+  }
+}
