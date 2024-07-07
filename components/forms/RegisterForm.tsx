@@ -14,10 +14,11 @@ import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.action";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Doctors, GenderOptions } from "@/constants";
+import { Doctors, GenderOptions, IdentificationTypes } from "@/constants";
 import { Label } from "../ui/label";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
+import FileUploader from "../FileUploader";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -78,7 +79,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           iconAlt="user"
         />
 
-      {/* phone & email */}
+        {/* phone & email */}
         <div className="flex flex-col gap-6 xl:flex-row">
           {/* email */}
           <CustomFormField
@@ -211,16 +212,16 @@ const RegisterForm = ({ user }: { user: User }) => {
 
         {/* insurance provider & policy number */}
         <div className="flex flex-col gap-6 xl:flex-row">
-           {/* insurance provider */}
-           <CustomFormField
+          {/* insurance provider */}
+          <CustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="insuranceProvider"
             label="Insurance Provider"
             placeholder="Aetna, Blue Cross Blue Shield"
           />
-           {/* insurance policy num */}
-           <CustomFormField
+          {/* insurance policy num */}
+          <CustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="insurancePolicyNumber"
@@ -231,17 +232,17 @@ const RegisterForm = ({ user }: { user: User }) => {
 
         {/* allergies & current medication */}
         <div className="flex flex-col gap-6 xl:flex-row">
-           {/* allergies */}
-           <CustomFormField
+          {/* allergies */}
+          <CustomFormField
             control={form.control}
             fieldType={FormFieldType.TEXTAREA}
             name="allergies"
             label="Allergies (if any)"
             placeholder="Peanuts, pollen, etc."
           />
-           {/* current medication */}
-           <CustomFormField
-            control={form.control} 
+          {/* current medication */}
+          <CustomFormField
+            control={form.control}
             fieldType={FormFieldType.TEXTAREA}
             name="currentMedication"
             label="Current Medication (if any)"
@@ -251,17 +252,17 @@ const RegisterForm = ({ user }: { user: User }) => {
 
         {/* family medical history & past medical history */}
         <div className="flex flex-col gap-6 xl:flex-row">
-           {/* family medical history */}
-           <CustomFormField
+          {/* family medical history */}
+          <CustomFormField
             control={form.control}
             fieldType={FormFieldType.TEXTAREA}
             name="familyMedicalHistory"
             label="Family Medical History"
             placeholder="mother's diabetes, father's heart disease, etc."
           />
-           {/* past medical history */}
-           <CustomFormField
-            control={form.control} 
+          {/* past medical history */}
+          <CustomFormField
+            control={form.control}
             fieldType={FormFieldType.TEXTAREA}
             name="pastMedicalHistory"
             label="Past Medical History"
@@ -275,7 +276,42 @@ const RegisterForm = ({ user }: { user: User }) => {
           </div>
         </section>
 
-        <div className="flex flex-col gap-6 xl:flex-row"></div>
+        {/* identification type */}
+        <CustomFormField
+          control={form.control}
+          fieldType={FormFieldType.SELECT}
+          name="identificationType"
+          label="Identification Type"
+          placeholder="select an identification type"
+        >
+          {IdentificationTypes.map((type) => (
+            <SelectItem key={type} value={type}>
+              {type}
+            </SelectItem>
+          ))}
+        </CustomFormField>
+
+        {/* identification number */}
+        <CustomFormField
+          control={form.control}
+          fieldType={FormFieldType.INPUT}
+          name="identificationNumber"
+          label="Identification Number"
+          placeholder="1234567890"
+        />
+
+        {/* identification document */}
+        <CustomFormField
+          control={form.control}
+          fieldType={FormFieldType.SKLETON}
+          name="identificationDocument"
+          label="Scanned copy of identification document"
+          renderSkeleton={(field) => (
+            <FormControl>
+              <FileUploader files={field.value} onChange={field.onChange} />
+            </FormControl>
+          )}
+        />
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
