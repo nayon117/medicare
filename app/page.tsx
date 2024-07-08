@@ -1,11 +1,14 @@
+/* eslint-disable no-undef */
 import PatientForm from "@/components/forms/PatientForm";
+import PassKeyModal from "@/components/PassKeyModal";
 import Image from "next/image";
 import Link from "next/link";
 
-const Homepage = () => {
+const Homepage = ({searchParams}:SearchParamProps) => {
+  const isAdmin = searchParams?.admin === "true";
   return (
     <div className="flex h-screen min-h-screen">
-      {/* TODO: OTP Verification | PassKeyModal */}
+     {isAdmin && <PassKeyModal/>}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
           <Image
