@@ -2,7 +2,7 @@ import PatientForm from "@/components/forms/PatientForm";
 import Image from "next/image";
 import Link from "next/link";
 
-const page = () => {
+const Homepage = () => {
   return (
     <div className="flex h-screen min-h-screen">
       {/* TODO: OTP Verification | PassKeyModal */}
@@ -38,4 +38,4 @@ const page = () => {
     </div>
   );
 };
-export default page;
+export default Homepage;
