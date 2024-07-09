@@ -21,7 +21,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const PassKeyModal = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [passKey, setPassKey] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
