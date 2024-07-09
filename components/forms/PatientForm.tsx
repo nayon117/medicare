@@ -22,11 +22,9 @@ export enum FormFieldType {
   SKLETON = "skleton",
 }
 
-
-
 const PatientForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
@@ -38,19 +36,23 @@ const PatientForm = () => {
   });
 
   // 2. Define a submit handler.
- async function onSubmit({name,email,phone}: z.infer<typeof UserFormValidation>) {
-   setIsLoading(true);
-   try {
-    const userData = {name,email,phone};
+  async function onSubmit({
+    name,
+    email,
+    phone,
+  }: z.infer<typeof UserFormValidation>) {
+    setIsLoading(true);
+    try {
+      const userData = { name, email, phone };
 
-    const user = await createUser(userData);
+      const user = await createUser(userData);
 
-    if(user) router.push(`/patients/${user.$id}/register`)
-
-   } catch (error) {
-    console.log(error);
-   }
-    setIsLoading(false);
+      if (user) router.push(`/patients/${user.$id}/register`);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
